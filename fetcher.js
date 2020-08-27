@@ -11,10 +11,11 @@ const requesting = (done) => {
   request(url, (err, response, body) => {
 
     if (err) {
-      console.log(`The url '${url}' is not valid please try again.\n`);
+      return console.log(`The url '${url}' is not valid please try again.\n`);
     } else {
       done(body);
     }
+    
   });
 };
 
@@ -30,8 +31,8 @@ const overWrite = (done) => {
       rl.close();
       done();
     } else {
-      console.log('Invalid input the application will now close.\n');
       rl.close();
+      return console.log('Invalid input the application will now close.\n');
     }
   });
 };
@@ -40,11 +41,17 @@ if (fs.existsSync(path)) {
   overWrite(() => {
     requesting((data) => {
       fs.writeFile(path, data, (err) => {
-        console.log(`Downloaded and saved ${data.length} amount of bytes to ${path}\n`);
+
+        if (err) {
+          return console.log(err);
+        } else {
+          console.log(`Downloaded and saved ${fs.statSync(path).size} amount of bytes to ${path}\n`);
+        }
+
       });
     });
   });
 
 } else {
-  console.log(`The path '${path}' is not valid please try again.\n`);
+  return console.log(`The path '${path}' is not valid please try again.\n`);
 }
