@@ -15,7 +15,7 @@ const requesting = (done) => {
     } else {
       done(body);
     }
-    
+
   });
 };
 
@@ -26,8 +26,8 @@ const overWrite = (done) => {
     output: process.stdout
   });
 
-  rl.question(`The file already exists do you want to overwrite? Press Y + Enter to proceed.\n`, (answer) => {
-    if (answer === 'Y') {
+  rl.question(`The file already exists do you want to overwrite? Press y + Enter to proceed.\n`, (answer) => {
+    if (answer.toLowerCase() === 'y') {
       rl.close();
       done();
     } else {
